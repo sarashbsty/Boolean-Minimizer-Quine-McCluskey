@@ -87,32 +87,52 @@ button:disabled{
   opacity:0.6;
   cursor:not-allowed
 }
+
+.err{
+  margin-top:4px;
+  font-size:12px;
+  color:#ef4444; /* red */
+  min-height:14px;
+}
 </style>
 </head>
 
 <body>
+<!-- INPUT VIEW -->
+<div id="input-view">
 
 <h1>Boolean Function Minimizer</h1>
 
-<!-- INPUT -->
 <section>
   <h2>Input</h2>
   <div class="grid">
     <div>
       <h3>Variables</h3>
-      <input id="var" type="number" min="1" value="4" class="mono">
+      <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
+	   <div id="err-var" class="err"></div>
     </div>
     <div>
       <h3>Minterms</h3>
-      <input id="minterms" type="text" value="1,2,3,4" class="mono">
+      <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
+	  <div id="err-minterms" class="err"></div>
     </div>
     <div>
       <h3>Don’t Cares</h3>
       <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
+	   <div id="err-dc" class="err"></div>
     </div>
   </div>
   <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
 </section>
+
+
+
+</div>
+
+<!-- OUTPUT VIEW -->
+<div id="output-view" style="display:none">
+
+<button onclick="backToInput()" style="margin-bottom:14px">← Back</button>
 
 <section id="input"></section>
 
@@ -177,23 +197,21 @@ button:disabled{
 
 <section>
   <h2>Petrick’s Method</h2>
-  <h3>Process</h3>
   <ul id="process" class="mono"></ul>
-  <h3>SOP Terms</h3>
   <div id="sop" class="mono"></div>
 </section>
 
 <section>
   <h2>Petrick Combinations (Cost)</h2>
   <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Term 1</th><th>Term 2</th><th>Term 3</th><th>Total Cost</th></tr>
-      </thead>
+    <table id="petrick-table">
+      <thead></thead>
       <tbody id="combos"></tbody>
     </table>
   </div>
 </section>
+
+</div>
 
 <!-- WASM -->
 <script src="quine.js"></script>
@@ -234,11 +252,31 @@ function runQM(inputObj){
 runBtn.onclick = () => {
 
   if (!QM) return;
-
-  const vars = Number(document.getElementById('var').value);
-
+  
+  //to ignore pevious errors
+  document.getElementById('err-var').textContent = '';
+  document.getElementById('err-minterms').textContent = '';
+  document.getElementById('err-dc').textContent = '';
+  
+  const varsRaw = document.getElementById('var').value.trim();
   const mintermsRaw = document.getElementById('minterms').value.trim();
   const dontCaresRaw = document.getElementById('dontcares').value.trim();
+  
+  let hasError = false;
+
+  if (varsRaw === '') {
+    document.getElementById('err-var').textContent = 'Number of variables is required';
+    hasError = true;
+  }
+
+  if (mintermsRaw === '') {
+    document.getElementById('err-minterms').textContent = 'At least one minterm is required';
+    hasError = true;
+  }
+  
+  if (hasError) return;
+
+  const vars = Number(varsRaw);
 
   const minterms = mintermsRaw === ''
     ? []
@@ -261,13 +299,14 @@ runBtn.onclick = () => {
   };
 
   const data = runQM(inputJSON);
+  document.getElementById('output-view').style.display = 'none';
   render(data);
+  showOutput();
 };
 </script>
 
 <script>
 /* ================= ORIGINAL RENDER CODE ================= */
-
 function render(d){
 
   document.getElementById('input').innerHTML = `
@@ -328,6 +367,10 @@ function render(d){
   renderMiniPI('uncovered-chart', d.uncoveredTerms, dominated, d);
   renderMiniPI('new-uncovered-chart', d.newUncoveredTerms, new Set(), d);
 
+  
+  if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
+	d.newUncoveredTerms = d.uncoveredTerms.slice();
+
   document.getElementById('petrick-coverage').innerHTML =
     d.newUncoveredTerms.map((m,i)=>{
       const pis = [...d.set[i]]
@@ -336,20 +379,35 @@ function render(d){
       return `<tr><td>${m}</td><td class="mono">${pis}</td></tr>`;
     }).join('');
 
-  document.getElementById('process').innerHTML =
-    d.process.map(p=>`<li>${p}</li>`).join('');
+  document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
 
-  document.getElementById('sop').textContent =
-    d.sopTerms.join(' + ');
+  document.getElementById('sop').textContent = d.sopTerms.join(' + ');
+	
+  const table = document.getElementById('petrick-table');
+  const thead = table.querySelector('thead');
+
+  const maxTerms = Math.max(...d.combinations.map(c => c.length - 1));
+
+	thead.innerHTML = `
+	<tr>
+		${Array.from({ length: maxTerms }, (_, i) => `<th>Term ${i + 1}</th>`).join('')}
+		<th>Total Cost</th>
+	</tr>
+	`;
 
   document.getElementById('combos').innerHTML =
-    d.combinations.map((c,i)=>`
-      <tr class="${i===d.minCostIdx?'highlight':''}">
-        <td class="mono">${c[0]}</td>
-        <td class="mono">${c[1]}</td>
-        <td class="mono">${c[2]}</td>
-        <td>${c[3]}</td>
-      </tr>`).join('');
+    d.combinations.map((c, i) => {
+      const cost = c[c.length - 1];
+      const terms = c.slice(0, -1);
+
+      return `
+        <tr class="${i === d.minCostIdx ? 'highlight' : ''}">
+          ${terms.map(t => `<td class="mono">${t}</td>`).join('')}
+          ${Array.from({ length: maxTerms - terms.length }, () => `<td></td>`).join('')}
+         <td>${cost}</td>
+        </tr>
+     `;
+    }).join('');
 }
 
 function renderCompact(container, table, title){
@@ -394,6 +452,34 @@ function renderMiniPI(id,minterms,dominated,d){
           }).join('')}
         </tr>`).join('')}
     </tbody>`;
+}
+</script>
+
+<script>
+function showOutput(){
+  document.getElementById('input-view').style.display = 'none';
+  document.getElementById('output-view').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function backToInput(){
+
+  document.getElementById('grouping').innerHTML = '';
+  document.getElementById('reductions').innerHTML = '';
+  document.getElementById('pi-body').innerHTML = '';
+  document.getElementById('pi-chart').innerHTML = '';
+  document.getElementById('uncovered-list').textContent = '';
+  document.getElementById('new-uncovered-list').textContent = '';
+  document.getElementById('uncovered-chart').innerHTML = '';
+  document.getElementById('new-uncovered-chart').innerHTML = '';
+  document.getElementById('petrick-coverage').innerHTML = '';
+  document.getElementById('process').innerHTML = '';
+  document.getElementById('sop').textContent = '';
+  document.getElementById('combos').innerHTML = '';
+  document.querySelector('#petrick-table thead').innerHTML = '';
+  
+  document.getElementById('output-view').style.display = 'none';
+  document.getElementById('input-view').style.display = 'block';
 }
 </script>
 
