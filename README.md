@@ -16,3 +16,7 @@ A Web-based tool to **simplify Boolean expressions** using the **Quine-McCluskey
   - Column reduction
   - Petrick Algorithm process
   - Final minimized expression
+
+## WORKINGS
+- Uses a Web Assembly module that accepts json text as Input and returns JSON text as output
+- https://github.com/sarashbsty/Quine-Mccluskey-Module
