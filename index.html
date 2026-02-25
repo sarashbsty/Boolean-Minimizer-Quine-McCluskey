@@ -220,14 +220,17 @@ button:disabled{
 let QM = null;
 const runBtn = document.getElementById('run');
 
-QMModule().then(Module => {
-  QM = Module;
-  runBtn.disabled = false;
-  runBtn.textContent = 'Run Minimizer';
-});
+async function initQM() {
+    QM = await QMModule();   
+    runBtn.disabled = false;
+    runBtn.textContent = 'Run Minimizer';
+}
+
+initQM();
 
 /* ---------- WASM BRIDGE ---------- */
-function runQM(inputObj){
+function runQM(inputObj)
+{  
   const json = JSON.stringify(inputObj);
 
   const inPtr = QM.stringToNewUTF8(json);
@@ -247,11 +250,17 @@ function runQM(inputObj){
 
   return JSON.parse(outStr);
 }
+</script>
+
+<script>
 
 /* ---------- INPUT HANDLER ---------- */
 runBtn.onclick = () => {
 
-  if (!QM) return;
+  if (!QM){ 
+	alert("QM not initialized yet");
+	throw new Error("QM not initialized yet");
+  }
   
   //to ignore pevious errors
   document.getElementById('err-var').textContent = '';
