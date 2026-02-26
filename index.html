@@ -465,28 +465,15 @@ function renderPetrickCoverage(uncoveredTerms,set){
 </script>
 
 <script>
-function showOutput(){
+function showOutput()
+{
   document.getElementById('input-view').style.display = 'none';
   document.getElementById('output-view').style.display = 'block';
   window.scrollTo(0,0);
 }
 
-function backToInput(){
-
-  document.getElementById('grouping').innerHTML = '';
-  document.getElementById('reductions').innerHTML = '';
-  document.getElementById('pi-body').innerHTML = '';
-  document.getElementById('pi-chart').innerHTML = '';
-  document.getElementById('uncovered-list').textContent = '';
-  document.getElementById('new-uncovered-list').textContent = '';
-  document.getElementById('uncovered-chart').innerHTML = '';
-  document.getElementById('new-uncovered-chart').innerHTML = '';
-  document.getElementById('petrick-coverage').innerHTML = '';
-  document.getElementById('process').innerHTML = '';
-  document.getElementById('sop').textContent = '';
-  document.getElementById('combos').innerHTML = '';
-  document.querySelector('#petrick-table thead').innerHTML = '';
-  
+function backToInput()
+{  
   document.getElementById('output-view').style.display = 'none';
   document.getElementById('input-view').style.display = 'block';
 }
