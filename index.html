@@ -367,16 +367,9 @@ function render(d){
     d.uncoveredTerms.filter(m=>!d.newUncoveredTerms.includes(m))
   );
 
-  document.getElementById('uncovered-list').textContent =
-    d.uncoveredTerms.join(', ');
-
-  document.getElementById('new-uncovered-list').textContent =
-    d.newUncoveredTerms.join(', ');
-
   renderMiniPI('uncovered-chart', d.uncoveredTerms, dominated, d);
   renderMiniPI('new-uncovered-chart', d.newUncoveredTerms, new Set(), d);
 
-  
   if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
 	d.newUncoveredTerms = d.uncoveredTerms.slice();
 
@@ -435,7 +428,7 @@ function renderCompact(container, table, title){
     });
   });
   html+=`</tbody></table></div>`;
-  container.innerHTML+=html;
+  container.innerHTML = html;
 }
 
 function renderMiniPI(id,minterms,dominated,d){
