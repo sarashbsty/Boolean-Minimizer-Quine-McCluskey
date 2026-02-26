@@ -19,4 +19,4 @@ A Web-based tool to **simplify Boolean expressions** using the **Quine-McCluskey
 
 ## Workings
 - Uses a Web Assembly module that accepts json text as Input and returns JSON text as output
-- https://github.com/sarashbsty/Quine-Mccluskey-Module
+- Module Repository : https://github.com/sarashbsty/Quine-Mccluskey-Module
