@@ -183,25 +183,26 @@ button:disabled{
   <div class="table-wrap"><table id="new-uncovered-chart"></table></div>
 </section>
 
-<section>
+<div id = "petrick">
+<section id="petrick-coverage">
   <h2>Petrick Coverage (Uncovered Minterms)</h2>
   <div class="table-wrap">
     <table>
       <thead>
         <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
       </thead>
-      <tbody id="petrick-coverage"></tbody>
+      <tbody id="petrick-coverage-body"></tbody>
     </table>
   </div>
 </section>
 
-<section>
+<section id="petrick-process">
   <h2>Petrick’s Method</h2>
   <ul id="process" class="mono"></ul>
   <div id="sop" class="mono"></div>
 </section>
 
-<section>
+<section id="petrick-combinations">
   <h2>Petrick Combinations (Cost)</h2>
   <div class="table-wrap">
     <table id="petrick-table">
@@ -210,6 +211,7 @@ button:disabled{
     </table>
   </div>
 </section>
+</div>
 
 </div>
 
@@ -329,10 +331,15 @@ function render(d){
   document.getElementById('result').textContent =
     'F = ' + d.result.join(' + ');
 
-  renderCompact(document.getElementById('grouping'), d.tables[0], 'Initial');
-  d.tables.slice(1).forEach((t,i)=>{
-    renderCompact(document.getElementById('reductions'), t, `Iteration ${i+1}`);
-  });
+  document.getElementById('grouping').innerHTML = ``;
+  document.getElementById('reductions').innerHTML = ``;
+	
+  renderTables(document.getElementById('grouping'), d.tables[0], 'Initial');
+  
+  if(d.tables.length === 1)
+	document.getElementById('reductions').innerHTML = `<tr><td class="mono" style="padding:8px;color:#94a3b8">None</td></tr>`;
+  else
+	d.tables.slice(1).forEach((t,i)=>{ renderTables(document.getElementById('reductions'), t, `Iteration ${i+1}`); });
 
   document.getElementById('pi-body').innerHTML =
     d.primeImplicants.map((p,i)=>`
@@ -369,41 +376,45 @@ function render(d){
 
   renderMiniPI('uncovered-chart', d.uncoveredTerms, dominated, d);
   renderMiniPI('new-uncovered-chart', d.newUncoveredTerms, new Set(), d);
-
-  if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
-	d.newUncoveredTerms = d.uncoveredTerms.slice();
-
-  document.getElementById('petrick-coverage').innerHTML =
+  
+  if(d.uncoveredTerms.length === 0) document.getElementById('petrick').hidden = true;
+  else
+  {
+	document.getElementById('petrick').hidden = false;
+	
+    if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
+		d.newUncoveredTerms = d.uncoveredTerms.slice();
+	
+	document.getElementById('petrick-coverage-body').innerHTML =
     d.newUncoveredTerms.map((m,i)=>{
       const pis = [...d.set[i]]
         .map(ch=>'P'+(ch.charCodeAt(0)-64))
         .join(', ');
       return `<tr><td>${m}</td><td class="mono">${pis}</td></tr>`;
     }).join('');
-
-  document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
-
-  document.getElementById('sop').textContent = d.sopTerms.join(' + ');
 	
+    document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
+	document.getElementById('sop').textContent = d.sopTerms.join(' + ');
+
+	renderCombinations(d.combinations , d.minCostIdx);
+  }
+}
+
+function renderCombinations(combinations , minCostIdx){
   const table = document.getElementById('petrick-table');
   const thead = table.querySelector('thead');
 
-  const maxTerms = Math.max(...d.combinations.map(c => c.length - 1));
+  const maxTerms = Math.max(...combinations.map(c => c.length - 1));
 
-	thead.innerHTML = `
-	<tr>
-		${Array.from({ length: maxTerms }, (_, i) => `<th>Term ${i + 1}</th>`).join('')}
-		<th>Total Cost</th>
-	</tr>
-	`;
+  thead.innerHTML = `<tr>${Array.from({ length: maxTerms }, (_, i) => `<th>Term ${i + 1}</th>`).join('')}<th>Total Cost</th></tr>`;
 
   document.getElementById('combos').innerHTML =
-    d.combinations.map((c, i) => {
+    combinations.map((c, i) => {
       const cost = c[c.length - 1];
       const terms = c.slice(0, -1);
 
       return `
-        <tr class="${i === d.minCostIdx ? 'highlight' : ''}">
+        <tr class="${i === minCostIdx ? 'highlight' : ''}">
           ${terms.map(t => `<td class="mono">${t}</td>`).join('')}
           ${Array.from({ length: maxTerms - terms.length }, () => `<td></td>`).join('')}
          <td>${cost}</td>
@@ -412,7 +423,7 @@ function render(d){
     }).join('');
 }
 
-function renderCompact(container, table, title){
+function renderTables(container, table, title){
   let html=`<h3>${title}</h3>
   <div class="table-wrap"><table>
   <thead><tr><th>Group</th><th>Binary</th><th>Minterms</th><th>Status</th></tr></thead><tbody>`;
