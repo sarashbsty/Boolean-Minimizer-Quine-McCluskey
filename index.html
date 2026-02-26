@@ -125,8 +125,6 @@ button:disabled{
   <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
 </section>
 
-
-
 </div>
 
 <!-- OUTPUT VIEW -->
@@ -185,14 +183,7 @@ button:disabled{
 
 <section>
   <h2>Petrick Coverage (Uncovered Minterms)</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
-      </thead>
-      <tbody id="petrick-coverage"></tbody>
-    </table>
-  </div>
+  <div class="table-wrap"><table id="petrick-coverage"></table></div>
 </section>
 
 <section>
@@ -308,7 +299,6 @@ runBtn.onclick = () => {
   };
 
   const data = runQM(inputJSON);
-  document.getElementById('output-view').style.display = 'none';
   render(data);
   showOutput();
 };
@@ -367,12 +357,6 @@ function render(d){
     d.uncoveredTerms.filter(m=>!d.newUncoveredTerms.includes(m))
   );
 
-  document.getElementById('uncovered-list').textContent =
-    d.uncoveredTerms.join(', ');
-
-  document.getElementById('new-uncovered-list').textContent =
-    d.newUncoveredTerms.join(', ');
-
   renderMiniPI('uncovered-chart', d.uncoveredTerms, dominated, d);
   renderMiniPI('new-uncovered-chart', d.newUncoveredTerms, new Set(), d);
 
@@ -380,14 +364,8 @@ function render(d){
   if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
 	d.newUncoveredTerms = d.uncoveredTerms.slice();
 
-  document.getElementById('petrick-coverage').innerHTML =
-    d.newUncoveredTerms.map((m,i)=>{
-      const pis = [...d.set[i]]
-        .map(ch=>'P'+(ch.charCodeAt(0)-64))
-        .join(', ');
-      return `<tr><td>${m}</td><td class="mono">${pis}</td></tr>`;
-    }).join('');
-
+  renderPetrickCoverage(d.newUncoveredTerms, d.set);
+  
   document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
 
   document.getElementById('sop').textContent = d.sopTerms.join(' + ');
@@ -435,7 +413,7 @@ function renderCompact(container, table, title){
     });
   });
   html+=`</tbody></table></div>`;
-  container.innerHTML+=html;
+  container.innerHTML = html;
 }
 
 function renderMiniPI(id,minterms,dominated,d){
@@ -462,6 +440,28 @@ function renderMiniPI(id,minterms,dominated,d){
         </tr>`).join('')}
     </tbody>`;
 }
+
+function renderPetrickCoverage(uncoveredTerms,set){
+
+  const t=document.getElementById('petrick-coverage');
+
+  if(!uncoveredTerms.length){
+    t.innerHTML=`<tr><td class="mono" style="padding:8px;color:#94a3b8">None</td></tr>`;
+    return;
+  }
+
+  t.innerHTML =
+	`<thead>
+        <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
+	</thead>`
+    uncoveredTerms.map((m,i)=>{
+      const pis = [...set[i]]
+        .map(ch=>'P'+(ch.charCodeAt(0)-64))
+        .join(', ');
+      return `<tr><td>${m}</td><td class="mono">${pis}</td></tr>`;
+    }).join('');
+}
+
 </script>
 
 <script>
