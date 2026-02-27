@@ -9,28 +9,27 @@
 </head>
 
 <body>
-<!-- INPUT VIEW -->
+
+<!-- input view-->
 <div id="input-view">
-
 <h1>Boolean Function Minimizer</h1>
-
 <section>
   <h2>Input</h2>
   <div class="grid">
     <div>
       <h3>Variables</h3>
       <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
-	   <div id="err-var" class="err"></div>
+	    <div id="err-var" class="err"></div>
     </div>
     <div>
       <h3>Minterms</h3>
       <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
-	  <div id="err-minterms" class="err"></div>
+	    <div id="err-minterms" class="err"></div>
     </div>
     <div>
       <h3>Don’t Cares</h3>
       <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
-	   <div id="err-dc" class="err"></div>
+	    <div id="err-dc" class="err"></div>
     </div>
   </div>
   <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
@@ -42,7 +41,20 @@
 
 <button onclick="backToInput()" style="margin-bottom:14px">← Back</button>
 
-<section id="input"></section>
+<section id="input">
+  <h2>Input Data</h2>
+  <div class="grid">
+    <div class="badge">
+      Variables: <span id="varVal"></span>
+    </div>
+    <div class="badge">
+      Minterms: <span id="minVal"></span>
+    </div>
+    <div class="badge">
+      Don’t Cares: <span id="dcVal"></span>
+    </div>
+  </div>
+</section>
 
 <section>
   <h2>Final Minimized Expression</h2>

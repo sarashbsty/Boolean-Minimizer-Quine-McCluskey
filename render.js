@@ -1,12 +1,8 @@
 function render(d){
 
-  document.getElementById('input').innerHTML = `
-    <h2>Input Data</h2>
-    <div class="grid">
-      <div class="badge">Variables: ${d.variable}</div>
-      <div class="badge">Minterms: ${d.minterms.join(', ')}</div>
-      <div class="badge">Don’t Cares: ${d.dontCares.length?d.dontCares.join(', '):'None'}</div>
-    </div>`;
+  document.getElementById('varVal').textContent = d.variable;
+  document.getElementById('minVal').textContent = d.minterms.join(', ');
+  document.getElementById('dcVal').textContent = d.dontCares.length ? d.dontCares.join(', ') : 'None';
 
   document.getElementById('result').textContent =
     'F = ' + d.result.join(' + ');
