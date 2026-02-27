@@ -5,96 +5,7 @@
 <title>Boolean Function Minimizer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-:root{
-  --bg:#0f172a;--panel:#020617;--border:#334155;
-  --text:#e5e7eb;--muted:#94a3b8;
-  --good:#22c55e;--warn:#f59e0b;--accent:#6366f1;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;padding:20px;background:var(--bg);
-  color:var(--text);font-family:system-ui,sans-serif
-}
-h1{font-size:26px}
-h2{margin-top:28px;font-size:20px;border-bottom:1px solid var(--border)}
-h3{margin:10px 0;font-size:14px;color:var(--muted)}
-section{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:10px;padding:14px;margin-top:20px
-}
-.mono{font-family:ui-monospace,monospace}
-.badge{
-  padding:4px 8px;border-radius:999px;
-  background:#1e293b;font-size:11px
-}
-.good{color:var(--good);font-weight:600}
-.warn{color:var(--warn)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px
-}
-.table-wrap{
-  overflow-x:auto;border:1px solid var(--border);
-  border-radius:6px;margin-top:8px
-}
-table{
-  border-collapse:collapse;
-  min-width:max-content;width:100%
-}
-th,td{
-  padding:6px 8px;
-  border-bottom:1px solid var(--border);
-  white-space:nowrap;
-  font-size:13px;
-  text-align:center
-}
-th{background:#020617;color:var(--muted)}
-tr:nth-child(even){background:#020617}
-.result{
-  font-size:18px;padding:10px;
-  border:1px solid var(--border);
-  border-radius:6px;background:#020617
-}
-.highlight{
-  background:rgba(99,102,241,0.15);
-  border-left:3px solid var(--accent)
-}
-.highlight-col{
-  background:rgba(245,158,11,0.18);
-  color:#fbbf24;
-  font-weight:600
-}
-input{
-  width:100%;
-  padding:6px;
-  background:#020617;
-  border:1px solid var(--border);
-  color:var(--text);
-  border-radius:6px
-}
-button{
-  padding:8px 14px;
-  background:var(--accent);
-  border:none;
-  border-radius:6px;
-  color:white;
-  font-weight:600;
-  cursor:pointer
-}
-button:disabled{
-  opacity:0.6;
-  cursor:not-allowed
-}
-
-.err{
-  margin-top:4px;
-  font-size:12px;
-  color:#ef4444; /* red */
-  min-height:14px;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -124,9 +35,6 @@ button:disabled{
   </div>
   <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
 </section>
-
-
-
 </div>
 
 <!-- OUTPUT VIEW -->
@@ -146,7 +54,7 @@ button:disabled{
   <div id="grouping"></div>
 </section>
 
-<section>
+<section id = "reduction-table">
   <h2>Reduction Iterations</h2>
   <div id="reductions"></div>
 </section>
@@ -173,14 +81,20 @@ button:disabled{
   </div>
 </section>
 
+<section id = "essential-prime">
+  <h2>Essential Prime-Implicants</h2>
+  <div id="essential" class="mono result"></div>
+</section>
+
 <section>
   <h2>Uncovered Minterms</h2>
   <div id="uncovered-list" class="mono"></div>
   <div class="table-wrap"><table id="uncovered-chart"></table></div>
-
+  <div id = "new-uncovered">
   <h3>After Column Domination</h3>
   <div id="new-uncovered-list" class="mono"></div>
   <div class="table-wrap"><table id="new-uncovered-chart"></table></div>
+  </div>
 </section>
 
 <div id = "petrick">
@@ -254,234 +168,8 @@ function runQM(inputObj)
 }
 </script>
 
-<script>
-
-/* ---------- INPUT HANDLER ---------- */
-runBtn.onclick = () => {
-
-  if (!QM){ 
-	alert("QM not initialized yet");
-	throw new Error("QM not initialized yet");
-  }
-  
-  //to ignore pevious errors
-  document.getElementById('err-var').textContent = '';
-  document.getElementById('err-minterms').textContent = '';
-  document.getElementById('err-dc').textContent = '';
-  
-  const varsRaw = document.getElementById('var').value.trim();
-  const mintermsRaw = document.getElementById('minterms').value.trim();
-  const dontCaresRaw = document.getElementById('dontcares').value.trim();
-  
-  let hasError = false;
-
-  if (varsRaw === '') {
-    document.getElementById('err-var').textContent = 'Number of variables is required';
-    hasError = true;
-  }
-
-  if (mintermsRaw === '') {
-    document.getElementById('err-minterms').textContent = 'At least one minterm is required';
-    hasError = true;
-  }
-  
-  if (hasError) return;
-
-  const vars = Number(varsRaw);
-
-  const minterms = mintermsRaw === ''
-    ? []
-    : mintermsRaw
-        .split(',')
-        .map(v => Number(v.trim()))
-        .filter(v => Number.isInteger(v));
-
-  const dontCares = dontCaresRaw === ''
-    ? []
-    : dontCaresRaw
-        .split(',')
-        .map(v => Number(v.trim()))
-        .filter(v => Number.isInteger(v));
-
-  const inputJSON = {
-    var: vars,
-    minterms,
-    dontCares
-  };
-
-  const data = runQM(inputJSON);
-  document.getElementById('output-view').style.display = 'none';
-  render(data);
-  showOutput();
-};
-</script>
-
-<script>
-/* ================= ORIGINAL RENDER CODE ================= */
-function render(d){
-
-  document.getElementById('input').innerHTML = `
-    <h2>Input Data</h2>
-    <div class="grid">
-      <div class="badge">Variables: ${d.variable}</div>
-      <div class="badge">Minterms: ${d.minterms.join(', ')}</div>
-      <div class="badge">Don’t Cares: ${d.dontCares.length?d.dontCares.join(', '):'None'}</div>
-    </div>`;
-
-  document.getElementById('result').textContent =
-    'F = ' + d.result.join(' + ');
-
-  document.getElementById('grouping').innerHTML = ``;
-  document.getElementById('reductions').innerHTML = ``;
-	
-  renderTables(document.getElementById('grouping'), d.tables[0], 'Initial');
-  
-  if(d.tables.length === 1)
-	document.getElementById('reductions').innerHTML = `<tr><td class="mono" style="padding:8px;color:#94a3b8">None</td></tr>`;
-  else
-	d.tables.slice(1).forEach((t,i)=>{ renderTables(document.getElementById('reductions'), t, `Iteration ${i+1}`); });
-
-  document.getElementById('pi-body').innerHTML =
-    d.primeImplicants.map((p,i)=>`
-      <tr>
-        <td class="mono">P${i+1}</td>
-        <td class="mono">${p.binary}</td>
-        <td class="mono">${p.expression}</td>
-        <td>${p.minterms.join(', ')}</td>
-        <td class="${p.isEssential?'good':''}">${p.isEssential?'Yes':'No'}</td>
-        <td>${p.cost}</td>
-      </tr>`).join('');
-
-  document.getElementById('pi-chart').innerHTML = `
-    <thead>
-      <tr>
-        <th>PI</th>
-        ${d.minterms.map(m=>`<th>${m}</th>`).join('')}
-      </tr>
-    </thead>
-    <tbody>
-      ${d.piChart.map((row,r)=>`
-        <tr>
-          <td class="mono">P${r+1}</td>
-          ${d.minterms.map(m=>{
-            const v=row[m];
-            return `<td>${v===2?'●':v===1?'✓':''}</td>`;
-          }).join('')}
-        </tr>`).join('')}
-    </tbody>`;
-
-  const dominated = new Set(
-    d.uncoveredTerms.filter(m=>!d.newUncoveredTerms.includes(m))
-  );
-
-  renderMiniPI('uncovered-chart', d.uncoveredTerms, dominated, d);
-  renderMiniPI('new-uncovered-chart', d.newUncoveredTerms, new Set(), d);
-  
-  if(d.uncoveredTerms.length === 0) document.getElementById('petrick').hidden = true;
-  else
-  {
-	document.getElementById('petrick').hidden = false;
-	
-    if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
-		d.newUncoveredTerms = d.uncoveredTerms.slice();
-	
-	document.getElementById('petrick-coverage-body').innerHTML =
-    d.newUncoveredTerms.map((m,i)=>{
-      const pis = [...d.set[i]]
-        .map(ch=>'P'+(ch.charCodeAt(0)-64))
-        .join(', ');
-      return `<tr><td>${m}</td><td class="mono">${pis}</td></tr>`;
-    }).join('');
-	
-    document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
-	document.getElementById('sop').textContent = d.sopTerms.join(' + ');
-
-	renderCombinations(d.combinations , d.minCostIdx);
-  }
-}
-
-function renderCombinations(combinations , minCostIdx){
-  const table = document.getElementById('petrick-table');
-  const thead = table.querySelector('thead');
-
-  const maxTerms = Math.max(...combinations.map(c => c.length - 1));
-
-  thead.innerHTML = `<tr>${Array.from({ length: maxTerms }, (_, i) => `<th>Term ${i + 1}</th>`).join('')}<th>Total Cost</th></tr>`;
-
-  document.getElementById('combos').innerHTML =
-    combinations.map((c, i) => {
-      const cost = c[c.length - 1];
-      const terms = c.slice(0, -1);
-
-      return `
-        <tr class="${i === minCostIdx ? 'highlight' : ''}">
-          ${terms.map(t => `<td class="mono">${t}</td>`).join('')}
-          ${Array.from({ length: maxTerms - terms.length }, () => `<td></td>`).join('')}
-         <td>${cost}</td>
-        </tr>
-     `;
-    }).join('');
-}
-
-function renderTables(container, table, title){
-  let html=`<h3>${title}</h3>
-  <div class="table-wrap"><table>
-  <thead><tr><th>Group</th><th>Binary</th><th>Minterms</th><th>Status</th></tr></thead><tbody>`;
-  table.groups.forEach((g,gi)=>{
-    g.implicants.forEach((imp,idx)=>{
-      html+=`
-        <tr>
-          <td>${idx===0?gi:''}</td>
-          <td class="mono">${imp.binary}</td>
-          <td>${imp.minterms.join(', ')}</td>
-          <td class="${imp.combined?'warn':'good'}">${imp.combined?'Combined':'Prime'}</td>
-        </tr>`;
-    });
-  });
-  html+=`</tbody></table></div>`;
-  container.innerHTML = html;
-}
-
-function renderMiniPI(id,minterms,dominated,d){
-  const t=document.getElementById(id);
-  if(!minterms.length){
-    t.innerHTML=`<tr><td class="mono" style="padding:8px;color:#94a3b8">None</td></tr>`;
-    return;
-  }
-  t.innerHTML=`
-    <thead><tr>
-      <th>PI</th>
-      ${minterms.map(m=>`<th class="${dominated.has(m)?'highlight-col':''}">${m}</th>`).join('')}
-    </tr></thead>
-    <tbody>
-      ${d.piChart.map((row,r)=>`
-        <tr>
-          <td class="mono">P${r+1}</td>
-          ${minterms.map(m=>{
-            const v=row[m];
-            return `<td class="${dominated.has(m)?'highlight-col':''}">
-              ${v===2?'●':v===1?'✓':''}
-            </td>`;
-          }).join('')}
-        </tr>`).join('')}
-    </tbody>`;
-}
-</script>
-
-<script>
-function showOutput()
-{
-  document.getElementById('input-view').style.display = 'none';
-  document.getElementById('output-view').style.display = 'block';
-  window.scrollTo(0,0);
-}
-
-function backToInput()
-{  
-  document.getElementById('output-view').style.display = 'none';
-  document.getElementById('input-view').style.display = 'block';
-}
-</script>
+<script src = "input.js" defer></script>
+<script src = "render.js" defer></script>
 
 </body>
 </html>
