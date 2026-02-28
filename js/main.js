@@ -1,3 +1,4 @@
+import { getInput } from './input.js';
 import {runQM } from './qmBridge.js';
 import render from './render.js'
 
@@ -20,62 +21,38 @@ runBtn.onclick = () => {
 	throw new Error("QM not initialized yet");
   }
   
-  //to ignore pevious errors
-  document.getElementById('err-var').textContent = '';
-  document.getElementById('err-minterms').textContent = '';
-  document.getElementById('err-dc').textContent = '';
-  
-  const varsRaw = document.getElementById('var').value.trim();
-  const mintermsRaw = document.getElementById('minterms').value.trim();
-  const dontCaresRaw = document.getElementById('dontcares').value.trim();
-  
-  let hasError = false;
+  const input = getInput();
+  if(!input) return;
 
-  if (varsRaw === '') {
-    document.getElementById('err-var').textContent = 'Number of variables is required';
-    hasError = true;
+  const data = runQM(QM, input);
+
+  if(data.error){
+    const error = document.getElementById('error-popup');
+    const errorBtn = document.getElementById('errorBtn');
+
+    document.getElementById('popup-msg').textContent = data.errorMsg;
+    error.classList.toggle('hidden');
+    errorBtn.onclick = () => error.classList.toggle('hidden');
+    return;
   }
 
-  if (mintermsRaw === '') {
-    document.getElementById('err-minterms').textContent = 'At least one minterm is required';
-    hasError = true;
-  }
-  
-  if (hasError) return;
-
-  const vars = Number(varsRaw);
-
-  const minterms = mintermsRaw === ''
-    ? []
-    : mintermsRaw
-        .split(',')
-        .map(v => Number(v.trim()))
-        .filter(v => Number.isInteger(v));
-
-  const dontCares = dontCaresRaw === ''
-    ? []
-    : dontCaresRaw
-        .split(',')
-        .map(v => Number(v.trim()))
-        .filter(v => Number.isInteger(v));
-
-  const inputJSON = {
-    var: vars,
-    minterms,
-    dontCares
-  };
-
-  const data = runQM(QM, inputJSON);
-  document.getElementById('output-view').style.display = 'none';
   render(data);
   
-  document.getElementById('input-view').style.display = 'none';
-  document.getElementById('output-view').style.display = 'block';
+  showView('output');
   window.scrollTo(0,0);
 
 };
 
-backBtn.onclick = () => {
-    document.getElementById('output-view').style.display = 'none';
-    document.getElementById('input-view').style.display = 'block';
+backBtn.onclick = () => showView('input');
+
+function showView(id){
+  document.getElementById('input-view').classList.toggle('hidden', id !== 'input');
+  document.getElementById('output-view').classList.toggle('hidden', id !== 'output');
 }
+
+// fetch('./js/test2.json')
+//   .then(res => res.json())
+//   .then(data => {
+//     console.log(data);
+//     render(data);
+//   });
