@@ -1,6 +1,6 @@
 import getInput from './input.js';
 import runQM from './qmBridge.js';
-import render from './render.js'
+import render from "./render.js";
 
 let QM = null;
 const runBtn = document.getElementById('run');
