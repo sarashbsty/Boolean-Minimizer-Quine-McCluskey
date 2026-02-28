@@ -1,4 +1,4 @@
-export function getInput(){
+export default function getInput(){
   //to ignore pevious errors
   document.getElementById('err-var').textContent = '';
   document.getElementById('err-minterms').textContent = '';

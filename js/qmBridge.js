@@ -1,4 +1,4 @@
-export function runQM(QM, inputObj)
+export default function runQM(QM, inputObj)
 {  
   const json = JSON.stringify(inputObj);
 
