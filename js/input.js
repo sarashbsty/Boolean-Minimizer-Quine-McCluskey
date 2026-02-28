@@ -1,10 +1,4 @@
-runBtn.onclick = () => {
-
-  if (!QM){ 
-	alert("QM not initialized yet");
-	throw new Error("QM not initialized yet");
-  }
-  
+export function getInput(){
   //to ignore pevious errors
   document.getElementById('err-var').textContent = '';
   document.getElementById('err-minterms').textContent = '';
@@ -26,7 +20,7 @@ runBtn.onclick = () => {
     hasError = true;
   }
   
-  if (hasError) return;
+  if (hasError) return null;
 
   const vars = Number(varsRaw);
 
@@ -50,8 +44,5 @@ runBtn.onclick = () => {
     dontCares
   };
 
-  const data = runQM(inputJSON);
-  document.getElementById('output-view').style.display = 'none';
-  render(data);
-  showOutput();
-};
+  return inputJSON;
+}

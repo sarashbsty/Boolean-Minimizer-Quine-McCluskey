@@ -86,3 +86,27 @@ button:disabled{
   color:#ef4444; /* red */
   min-height:14px;
 }
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-box {
+  background: #111;
+  color: #fff;
+  padding: 16px 20px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  min-width: 260px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}

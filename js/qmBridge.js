@@ -1,14 +1,3 @@
-let QM = null;
-const runBtn = document.getElementById('run');
-
-export async function initQM() {
-    QM = await QMModule();   
-    runBtn.disabled = false;
-    runBtn.textContent = 'Run Minimizer';
-}
-
-initQM();
-
 /* ---------- WASM BRIDGE ---------- */
 export function runQM(QM, inputObj)
 {  
