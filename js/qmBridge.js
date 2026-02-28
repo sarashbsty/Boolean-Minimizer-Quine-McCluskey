@@ -1,4 +1,3 @@
-/* ---------- WASM BRIDGE ---------- */
 export function runQM(QM, inputObj)
 {  
   const json = JSON.stringify(inputObj);

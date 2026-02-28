@@ -1,5 +1,5 @@
-import { getInput } from './input.js';
-import {runQM } from './qmBridge.js';
+import getInput from './input.js';
+import runQM from './qmBridge.js';
 import render from './render.js'
 
 let QM = null;
@@ -40,7 +40,6 @@ runBtn.onclick = () => {
   
   showView('output');
   window.scrollTo(0,0);
-
 };
 
 backBtn.onclick = () => showView('input');
