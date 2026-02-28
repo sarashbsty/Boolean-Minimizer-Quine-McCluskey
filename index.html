@@ -12,176 +12,141 @@
 
 <!-- input view-->
 <div id="input-view">
-<h1>Boolean Function Minimizer</h1>
-<section>
-  <h2>Input</h2>
-  <div class="grid">
-    <div>
-      <h3>Variables</h3>
-      <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
-	    <div id="err-var" class="err"></div>
+  <h1>Boolean Function Minimizer</h1>
+  <section>
+    <h2>Input</h2>
+    <div class="grid">
+      <div>
+        <h3>Variables</h3>
+        <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
+        <div id="err-var" class="err"></div>
+      </div>
+      <div>
+        <h3>Minterms</h3>
+        <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
+        <div id="err-minterms" class="err"></div>
+      </div>
+      <div>
+        <h3>Don’t Cares</h3>
+        <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
+        <div id="err-dc" class="err"></div>
+      </div>
     </div>
-    <div>
-      <h3>Minterms</h3>
-      <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
-	    <div id="err-minterms" class="err"></div>
-    </div>
-    <div>
-      <h3>Don’t Cares</h3>
-      <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
-	    <div id="err-dc" class="err"></div>
-    </div>
-  </div>
-  <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
-</section>
+    <button id="run" disabled style="margin-top:12px">Loading WASM…</button>
+  </section>
 </div>
 
 <!-- OUTPUT VIEW -->
-<div id="output-view" style="display:none">
+<div id="output-view" style ="display: none;" >
 
-<button onclick="backToInput()" style="margin-bottom:14px">← Back</button>
+  <button id = 'back' style="margin-bottom:14px">← Back</button>
 
-<section id="input">
-  <h2>Input Data</h2>
-  <div class="grid">
-    <div class="badge">
-      Variables: <span id="varVal"></span>
+  <section id="input">
+    <h2>Input Data</h2>
+    <div class="grid">
+      <div class="badge">
+        Variables: <span id="varVal"></span>
+      </div>
+      <div class="badge">
+        Minterms: <span id="minVal"></span>
+      </div>
+      <div class="badge">
+        Don’t Cares: <span id="dcVal"></span>
+      </div>
     </div>
-    <div class="badge">
-      Minterms: <span id="minVal"></span>
+  </section>
+
+  <section>
+    <h2>Final Minimized Expression</h2>
+    <div id="result" class="mono result"></div>
+  </section>
+
+  <section>
+    <h2>Grouping (Initial)</h2>
+    <div id="grouping"></div>
+  </section>
+
+  <section id = "reduction-table">
+    <h2>Reduction Iterations</h2>
+    <div id="reductions"></div>
+  </section>
+
+  <section>
+    <h2>Prime Implicants</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Binary</th><th>Expression</th>
+            <th>Minterms</th><th>Essential</th><th>Cost</th>
+          </tr>
+        </thead>
+        <tbody id="pi-body"></tbody>
+      </table>
     </div>
-    <div class="badge">
-      Don’t Cares: <span id="dcVal"></span>
+  </section>
+
+  <section>
+    <h2>Prime Implicant Chart</h2>
+    <div class="table-wrap">
+      <table id="pi-chart"></table>
     </div>
+  </section>
+
+  <section id = "essential-prime">
+    <h2>Essential Prime-Implicants</h2>
+    <div id="essential" class="mono result"></div>
+  </section>
+
+  <section>
+    <h2>Uncovered Minterms</h2>
+    <div class="table-wrap"><table id="uncovered-chart"></table></div>
+    <div id = "new-uncovered">
+    <h3>After Column Domination</h3>
+    <div class="table-wrap"><table id="new-uncovered-chart"></table></div>
+    </div>
+  </section>
+
+  <div id = "petrick">
+    <section>
+      <h2>Petrick Coverage (Uncovered Minterms)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
+          </thead>
+          <tbody id="petrick-coverage-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Petrick’s Method</h2>
+      <ul id="process" class="mono"></ul>
+    </section>
+      
+    <section>
+      <h2>Minimal SOP Terms</h2>
+      <div id="sop" class="mono"></div>
+    </section>
+
+    <section>
+      <h2>Petrick Combinations (Cost)</h2>
+      <div class="table-wrap">
+        <table id="petrick-table">
+          <thead></thead>
+          <tbody id="combos"></tbody>
+        </table>
+      </div>
+    </section>
   </div>
-</section>
-
-<section>
-  <h2>Final Minimized Expression</h2>
-  <div id="result" class="mono result"></div>
-</section>
-
-<section>
-  <h2>Grouping (Initial)</h2>
-  <div id="grouping"></div>
-</section>
-
-<section id = "reduction-table">
-  <h2>Reduction Iterations</h2>
-  <div id="reductions"></div>
-</section>
-
-<section>
-  <h2>Prime Implicants</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Binary</th><th>Expression</th>
-          <th>Minterms</th><th>Essential</th><th>Cost</th>
-        </tr>
-      </thead>
-      <tbody id="pi-body"></tbody>
-    </table>
-  </div>
-</section>
-
-<section>
-  <h2>Prime Implicant Chart</h2>
-  <div class="table-wrap">
-    <table id="pi-chart"></table>
-  </div>
-</section>
-
-<section id = "essential-prime">
-  <h2>Essential Prime-Implicants</h2>
-  <div id="essential" class="mono result"></div>
-</section>
-
-<section>
-  <h2>Uncovered Minterms</h2>
-  <div id="uncovered-list" class="mono"></div>
-  <div class="table-wrap"><table id="uncovered-chart"></table></div>
-  <div id = "new-uncovered">
-  <h3>After Column Domination</h3>
-  <div id="new-uncovered-list" class="mono"></div>
-  <div class="table-wrap"><table id="new-uncovered-chart"></table></div>
-  </div>
-</section>
-
-<div id = "petrick">
-<section id="petrick-coverage">
-  <h2>Petrick Coverage (Uncovered Minterms)</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
-      </thead>
-      <tbody id="petrick-coverage-body"></tbody>
-    </table>
-  </div>
-</section>
-
-<section id="petrick-process">
-  <h2>Petrick’s Method</h2>
-  <ul id="process" class="mono"></ul>
-  <div id="sop" class="mono"></div>
-</section>
-
-<section id="petrick-combinations">
-  <h2>Petrick Combinations (Cost)</h2>
-  <div class="table-wrap">
-    <table id="petrick-table">
-      <thead></thead>
-      <tbody id="combos"></tbody>
-    </table>
-  </div>
-</section>
-</div>
-
 </div>
 
 <!-- WASM -->
-<script src="quine.js"></script>
+<script src="./js/quine.js"></script>
 
-<script>
-let QM = null;
-const runBtn = document.getElementById('run');
+<script type="module" src = "./js/main.js" defer></script>
 
-async function initQM() {
-    QM = await QMModule();   
-    runBtn.disabled = false;
-    runBtn.textContent = 'Run Minimizer';
-}
-
-initQM();
-
-/* ---------- WASM BRIDGE ---------- */
-function runQM(inputObj)
-{  
-  const json = JSON.stringify(inputObj);
-
-  const inPtr = QM.stringToNewUTF8(json);
-  const outPtr = QM._qm_run(inPtr);
-
-  if (!outPtr) {
-    QM._free(inPtr);
-    throw new Error("qm_run returned NULL");
-  }
-
-  const outStr = QM.UTF8ToString(outPtr);
-
-  QM._free(inPtr);
-  QM._free(outPtr);
-  
-  console.log(outStr);
-
-  return JSON.parse(outStr);
-}
-</script>
-
-<script src = "input.js" defer></script>
-<script src = "render.js" defer></script>
 
 </body>
 </html>

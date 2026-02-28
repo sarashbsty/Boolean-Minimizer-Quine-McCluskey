@@ -1,0 +1,384 @@
+{
+        "error":        false,
+        "variable":     5,
+        "minterms":     [0, 1, 2, 5, 6, 7, 8, 9, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 30, 31],
+        "dontCares":    [],
+        "tables":       [{
+                        "groups":       [{
+                                        "implicants":   [{
+                                                        "binary":       "00000",
+                                                        "minterms":     [0],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "00001",
+                                                        "minterms":     [1],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "00010",
+                                                        "minterms":     [2],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "01000",
+                                                        "minterms":     [8],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10000",
+                                                        "minterms":     [16],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "00101",
+                                                        "minterms":     [5],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "00110",
+                                                        "minterms":     [6],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "01001",
+                                                        "minterms":     [9],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10001",
+                                                        "minterms":     [17],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "11000",
+                                                        "minterms":     [24],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "00111",
+                                                        "minterms":     [7],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "01110",
+                                                        "minterms":     [14],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10101",
+                                                        "minterms":     [21],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10110",
+                                                        "minterms":     [22],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "11001",
+                                                        "minterms":     [25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "11010",
+                                                        "minterms":     [26],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "01111",
+                                                        "minterms":     [15],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10111",
+                                                        "minterms":     [23],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "11110",
+                                                        "minterms":     [30],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "11111",
+                                                        "minterms":     [31],
+                                                        "combined":     true
+                                                }]
+                                }]
+                }, {
+                        "groups":       [{
+                                        "implicants":   [{
+                                                        "binary":       "0000-",
+                                                        "minterms":     [0, 1],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "000-0",
+                                                        "minterms":     [0, 2],
+                                                        "combined":     false
+                                                }, {
+                                                        "binary":       "0-000",
+                                                        "minterms":     [0, 8],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-0000",
+                                                        "minterms":     [0, 16],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "00-01",
+                                                        "minterms":     [1, 5],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "0-001",
+                                                        "minterms":     [1, 9],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-0001",
+                                                        "minterms":     [1, 17],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "00-10",
+                                                        "minterms":     [2, 6],
+                                                        "combined":     false
+                                                }, {
+                                                        "binary":       "0100-",
+                                                        "minterms":     [8, 9],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-1000",
+                                                        "minterms":     [8, 24],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1000-",
+                                                        "minterms":     [16, 17],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-000",
+                                                        "minterms":     [16, 24],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "001-1",
+                                                        "minterms":     [5, 7],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-0101",
+                                                        "minterms":     [5, 21],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "0011-",
+                                                        "minterms":     [6, 7],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "0-110",
+                                                        "minterms":     [6, 14],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-0110",
+                                                        "minterms":     [6, 22],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-1001",
+                                                        "minterms":     [9, 25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "10-01",
+                                                        "minterms":     [17, 21],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-001",
+                                                        "minterms":     [17, 25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1100-",
+                                                        "minterms":     [24, 25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "110-0",
+                                                        "minterms":     [24, 26],
+                                                        "combined":     false
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "0-111",
+                                                        "minterms":     [7, 15],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-0111",
+                                                        "minterms":     [7, 23],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "0111-",
+                                                        "minterms":     [14, 15],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-1110",
+                                                        "minterms":     [14, 30],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "101-1",
+                                                        "minterms":     [21, 23],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1011-",
+                                                        "minterms":     [22, 23],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-110",
+                                                        "minterms":     [22, 30],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "11-10",
+                                                        "minterms":     [26, 30],
+                                                        "combined":     false
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "-1111",
+                                                        "minterms":     [15, 31],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-111",
+                                                        "minterms":     [23, 31],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1111-",
+                                                        "minterms":     [30, 31],
+                                                        "combined":     true
+                                                }]
+                                }]
+                }, {
+                        "groups":       [{
+                                        "implicants":   [{
+                                                        "binary":       "0-00-",
+                                                        "minterms":     [0, 1, 8, 9],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-000-",
+                                                        "minterms":     [0, 1, 16, 17],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "--000",
+                                                        "minterms":     [0, 8, 16, 24],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "-0-01",
+                                                        "minterms":     [1, 5, 17, 21],
+                                                        "combined":     false
+                                                }, {
+                                                        "binary":       "--001",
+                                                        "minterms":     [1, 9, 17, 25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-100-",
+                                                        "minterms":     [8, 9, 24, 25],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-00-",
+                                                        "minterms":     [16, 17, 24, 25],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "-01-1",
+                                                        "minterms":     [5, 7, 21, 23],
+                                                        "combined":     false
+                                                }, {
+                                                        "binary":       "0-11-",
+                                                        "minterms":     [6, 7, 14, 15],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-011-",
+                                                        "minterms":     [6, 7, 22, 23],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "--110",
+                                                        "minterms":     [6, 14, 22, 30],
+                                                        "combined":     true
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "--111",
+                                                        "minterms":     [7, 15, 23, 31],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "-111-",
+                                                        "minterms":     [14, 15, 30, 31],
+                                                        "combined":     true
+                                                }, {
+                                                        "binary":       "1-11-",
+                                                        "minterms":     [22, 23, 30, 31],
+                                                        "combined":     true
+                                                }]
+                                }]
+                }, {
+                        "groups":       [{
+                                        "implicants":   [{
+                                                        "binary":       "--00-",
+                                                        "minterms":     [0, 1, 8, 9, 16, 17, 24, 25],
+                                                        "combined":     false
+                                                }]
+                                }, {
+                                        "implicants":   [{
+                                                        "binary":       "--11-",
+                                                        "minterms":     [6, 7, 14, 15, 22, 23, 30, 31],
+                                                        "combined":     false
+                                                }]
+                                }]
+                }],
+        "primeImplicants":      [{
+                        "binary":       "000-0",
+                        "expression":   "A'B'C'E'",
+                        "minterms":     [0, 2],
+                        "isEssential":  false,
+                        "cost": 8
+                }, {
+                        "binary":       "00-10",
+                        "expression":   "A'B'DE'",
+                        "minterms":     [2, 6],
+                        "isEssential":  false,
+                        "cost": 7
+                }, {
+                        "binary":       "110-0",
+                        "expression":   "ABC'E'",
+                        "minterms":     [24, 26],
+                        "isEssential":  false,
+                        "cost": 6
+                }, {
+                        "binary":       "11-10",
+                        "expression":   "ABDE'",
+                        "minterms":     [26, 30],
+                        "isEssential":  false,
+                        "cost": 5
+                }, {
+                        "binary":       "-0-01",
+                        "expression":   "B'D'E",
+                        "minterms":     [1, 5, 17, 21],
+                        "isEssential":  false,
+                        "cost": 5
+                }, {
+                        "binary":       "-01-1",
+                        "expression":   "B'CE",
+                        "minterms":     [5, 7, 21, 23],
+                        "isEssential":  false,
+                        "cost": 4
+                }, {
+                        "binary":       "--00-",
+                        "expression":   "C'D'",
+                        "minterms":     [0, 1, 8, 9, 16, 17, 24, 25],
+                        "isEssential":  true,
+                        "cost": 4
+                }, {
+                        "binary":       "--11-",
+                        "expression":   "CD",
+                        "minterms":     [6, 7, 14, 15, 22, 23, 30, 31],
+                        "isEssential":  true,
+                        "cost": 2
+                }],
+        "piChart":      [[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 2]],
+        "essentialPi":  ["C'D'", "CD"],
+        "uncoveredTerms":       [2, 5, 21, 26],
+        "newUncoveredTerms":    [2, 5, 26],
+        "set":  ["AB", "EF", "CD"],
+        "process":      ["P = (P1 + P2)·(P5 + P6)·(P3 + P4)", "P = (P1P5 + P1P6 + P2P5 + P2P6)·(P3 + P4)", "P = (P1P5P3 + P1P5P4 + P1P6P3 + P1P6P4 + P2P5P3 + P2P5P4 + P2P6P3 + P2P6P4)"],
+        "sopTerms":     ["P1P5P3", "P1P5P4", "P1P6P3", "P1P6P4", "P2P5P3", "P2P5P4", "P2P6P3", "P2P6P4"],
+        "combinations": [["A'B'C'E'", "B'D'E", "ABC'E'", 19], ["A'B'C'E'", "B'D'E", "ABDE'", 18], ["A'B'C'E'", "B'CE", "ABC'E'", 18], ["A'B'C'E'", "B'CE", "ABDE'", 17], ["A'B'DE'", "B'D'E", "ABC'E'", 18], ["A'B'DE'", "B'D'E", "ABDE'", 17], ["A'B'DE'", "B'CE", "ABC'E'", 17], ["A'B'DE'", "B'CE", "ABDE'", 16]],
+        "minCostIdx":   7,
+        "result":       ["C'D'", "CD", "A'B'DE'", "B'CE", "ABDE'"]
+}

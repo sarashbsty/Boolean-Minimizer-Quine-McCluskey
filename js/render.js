@@ -1,4 +1,6 @@
-function render(d){
+import renderTables from "./renderTables.js";
+
+export default function render(d){
 
   document.getElementById('varVal').textContent = d.variable;
   document.getElementById('minVal').textContent = d.minterms.join(', ');
@@ -7,14 +9,22 @@ function render(d){
   document.getElementById('result').textContent =
     'F = ' + d.result.join(' + ');
 
-  document.getElementById('grouping').innerHTML = ``;
-  document.getElementById('reductions').innerHTML = ``;
+
+  document.getElementById('grouping').innerHTML = '';
+  document.getElementById('reductions').innerHTML = '';
+
+  const groupFragment = document.createDocumentFragment();
+  renderTables(groupFragment, d.tables[0], 'Initial');
+  document.getElementById('grouping').appendChild(groupFragment);
 
   if(d.tables.length === 1) document.getElementById('reduction-table').hidden = true;
   else document.getElementById('reduction-table').hidden = false;
-	
-  renderTables(document.getElementById('grouping'), d.tables[0], 'Initial');
-  d.tables.slice(1).forEach((t,i)=>{ renderTables(document.getElementById('reductions'), t, `Iteration ${i+1}`); });
+
+  const reductionFragment = document.createDocumentFragment();
+	d.tables.slice(1).forEach((t,i)=>{ 
+    renderTables(reductionFragment, t, `Iteration ${i+1}`); 
+  });
+  document.getElementById('reductions').appendChild(reductionFragment);
     
   renderPrimeImplicants(d.primeImplicants);  
 
@@ -46,30 +56,11 @@ function render(d){
 	  renderPetrickCoverage(d.newUncoveredTerms, d.set)
 	
     document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
-	  document.getElementById('sop').textContent = d.sopTerms.join(' + ');
+
+	  document.getElementById('sop').textContent = d.sopTerms.join(', ');
 
 	  renderCombinations(d.combinations , d.minCostIdx);
   }
-}
-
-function renderTables(container, table, title)
-{
-  let html=`<h3>${title}</h3>
-  <div class="table-wrap"><table>
-  <thead><tr><th>Group</th><th>Binary</th><th>Minterms</th><th>Status</th></tr></thead><tbody>`;
-  table.groups.forEach((g,gi)=>{
-    g.implicants.forEach((imp,idx)=>{
-      html+=`
-        <tr>
-          <td>${idx===0?gi:''}</td>
-          <td class="mono">${imp.binary}</td>
-          <td>${imp.minterms.join(', ')}</td>
-          <td class="${imp.combined?'warn':'good'}">${imp.combined?'Combined':'Prime'}</td>
-        </tr>`;
-    });
-  });
-  html+=`</tbody></table></div>`;
-  container.innerHTML += html;
 }
 
 function renderPrimeImplicants(primeImplicants)
@@ -84,7 +75,7 @@ function renderPrimeImplicants(primeImplicants)
         <td class="${p.isEssential?'good':''}">${p.isEssential?'Yes':'No'}</td>
         <td>${p.cost}</td>
       </tr>`).join('');
-}  
+}
 
 function renderPichart(minterms, piChart)
 {
@@ -166,17 +157,4 @@ function renderCombinations(combinations , minCostIdx)
         </tr>
      `;
     }).join('');
-}
-
-function showOutput()
-{
-  document.getElementById('input-view').style.display = 'none';
-  document.getElementById('output-view').style.display = 'block';
-  window.scrollTo(0,0);
-}
-
-function backToInput()
-{  
-  document.getElementById('output-view').style.display = 'none';
-  document.getElementById('input-view').style.display = 'block';
 }
