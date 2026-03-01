@@ -1,4 +1,4 @@
-export default function renderPicharts(minterms, piChart)
+export default function renderPichart(minterms, piChart)
 {
   document.getElementById('pi-chart').innerHTML = `
     <thead>
