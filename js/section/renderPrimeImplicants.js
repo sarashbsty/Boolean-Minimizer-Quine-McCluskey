@@ -1,4 +1,6 @@
-export default function renderPrimeImplicants(primeImplicants)
+import renderPiChart from "./renderPiChart.js"
+
+export default function renderPrimeImplicants(primeImplicants, piChart, minterms)
 {
   const primeFragment =  document.createDocumentFragment();
 
@@ -33,4 +35,5 @@ export default function renderPrimeImplicants(primeImplicants)
   });
 
   document.getElementById('pi-body').replaceChildren(primeFragment);
+  renderPiChart('pi-chart',minterms,new Set(),piChart);
 }

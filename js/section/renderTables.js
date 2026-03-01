@@ -34,7 +34,7 @@ export default function renderTables(fragment, tableData, title) {
       tr.appendChild(tdGroupNo);
 
       const tdBinary = document.createElement('td');
-      tdBinary.className = 'mono';
+      tdBinary.classList.add('mono');
       tdBinary.textContent = imp.binary;
       tr.appendChild(tdBinary);
 
