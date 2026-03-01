@@ -14,22 +14,20 @@ export default function render(d){
   document.getElementById('result').textContent =
     'F = ' + d.result.join(' + ');
 
-
-  document.getElementById('grouping').innerHTML = '';
-  document.getElementById('reductions').innerHTML = '';
-
   const groupFragment = document.createDocumentFragment();
   renderTables(groupFragment, d.tables[0], 'Initial');
-  document.getElementById('grouping').appendChild(groupFragment);
+  document.getElementById('grouping').replaceChildren(groupFragment);
 
-  if(d.tables.length === 1) document.getElementById('reduction-table').hidden = true;
-  else document.getElementById('reduction-table').hidden = false;
-
-  const reductionFragment = document.createDocumentFragment();
-	d.tables.slice(1).forEach((t,i)=>{ 
-    renderTables(reductionFragment, t, `Iteration ${i+1}`); 
-  });
-  document.getElementById('reductions').appendChild(reductionFragment);
+  if(d.tables.length > 1)
+  {
+    const reduceFragment = document.createDocumentFragment();
+    d.tables.slice(1).forEach((t,i)=>{ 
+      renderTables(reduceFragment, t, `Iteration ${i+1}`); 
+    });
+    document.getElementById('reductions').replaceChildren(reduceFragment);
+    document.getElementById('reduction-table').hidden = false;
+  }
+  else  document.getElementById('reduction-table').hidden = true;
     
   renderPrimeImplicants(d.primeImplicants);  
 
@@ -46,14 +44,14 @@ export default function render(d){
 
   if(!d.newUncoveredTerms.length) document.getElementById('new-uncovered').hidden = true;
   else{
-        document.getElementById('new-uncovered').hidden = false;
-        renderUncovered('new-uncovered-chart', d.newUncoveredTerms, new Set(), d.piChart);
+    document.getElementById('new-uncovered').hidden = false;
+    renderUncovered('new-uncovered-chart', d.newUncoveredTerms, new Set(), d.piChart);
   }
   
   if(!d.uncoveredTerms.length) document.getElementById('petrick').hidden = true;
   else
   {
-	  document.getElementById('petrick').hidden = false;
+  	document.getElementById('petrick').hidden = false;
 	
     if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
 		  d.newUncoveredTerms = d.uncoveredTerms.slice();

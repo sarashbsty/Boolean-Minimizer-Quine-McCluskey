@@ -1,13 +1,36 @@
 export default function renderPrimeImplicants(primeImplicants)
 {
-  document.getElementById('pi-body').innerHTML =
-    primeImplicants.map((p,i)=>`
-      <tr>
-        <td class="mono">P${i+1}</td>
-        <td class="mono">${p.binary}</td>
-        <td class="mono">${p.expression}</td>
-        <td>${p.minterms.join(', ')}</td>
-        <td class="${p.isEssential?'good':''}">${p.isEssential?'Yes':'No'}</td>
-        <td>${p.cost}</td>
-      </tr>`).join('');
+  const primeFragment =  document.createDocumentFragment();
+
+  primeImplicants.forEach((imp,i) => {
+    const tr = document.createElement('tr');
+
+    const tdPrime = document.createElement('td');
+    tdPrime.classList.add('mono');
+    tdPrime.textContent = `P${i+1}`;
+
+    const tdBinary = document.createElement('td');
+    tdBinary.classList.add('mono');
+    tdBinary.textContent = imp.binary;
+
+    const tdExpression = document.createElement('td');
+    tdExpression.classList.add('mono');
+    tdExpression.textContent = imp.expression;
+
+    const tdMinterms = document.createElement('td');
+    tdMinterms.textContent = imp.minterms.join(', ');
+
+    const tdEssential = document.createElement('td');
+    tdEssential.textContent = imp.isEssential ? 'Yes' : 'No';
+    if(imp.isEssential) tdEssential.classList.add('good');
+    else tdEssential.classList.add('warn');
+
+    const tdCost = document.createElement('td');
+    tdCost.textContent = imp.cost;
+
+    tr.append(tdPrime,tdBinary,tdExpression,tdMinterms,tdEssential,tdCost);
+    primeFragment.append(tr);
+  });
+
+  document.getElementById('pi-body').replaceChildren(primeFragment);
 }
