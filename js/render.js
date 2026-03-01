@@ -1,8 +1,8 @@
 import renderTables from "./section/renderTables.js";
 import renderPrimeImplicants from "./section/renderPrimeImplicants.js";
-import renderPichart from "./section/renderPiChart.js";
 import renderUncovered from "./section/renderUncovered.js";
 import renderPetrickCoverage from "./section/renderPetrickCoverage.js";
+import renderExpansion from "./section/renderExpansion.js";
 import renderCombinations from "./section/renderCombinations.js";
 
 export default function render(d){
@@ -27,27 +27,15 @@ export default function render(d){
     document.getElementById('reductions').replaceChildren(reduceFragment);
     document.getElementById('reduction-table').hidden = false;
   }
-  else  document.getElementById('reduction-table').hidden = true;
+  else document.getElementById('reduction-table').hidden = true;
     
-  renderPrimeImplicants(d.primeImplicants);  
-
-  renderPichart(d.minterms, d.piChart);    
+  renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms);  
 
   if(!d.essentialPi.length) document.getElementById('essential').textContent = 'None';
   else document.getElementById('essential').textContent = d.essentialPi.join(', ');
   
-  const dominated = new Set(
-    d.uncoveredTerms.filter(m=>!d.newUncoveredTerms.includes(m))
-  );
- 
-  renderUncovered('uncovered-chart', d.uncoveredTerms, dominated, d.piChart);
+  renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
 
-  if(!d.newUncoveredTerms.length) document.getElementById('new-uncovered').hidden = true;
-  else{
-    document.getElementById('new-uncovered').hidden = false;
-    renderUncovered('new-uncovered-chart', d.newUncoveredTerms, new Set(), d.piChart);
-  }
-  
   if(!d.uncoveredTerms.length) document.getElementById('petrick').hidden = true;
   else
   {
@@ -58,7 +46,7 @@ export default function render(d){
 	
 	  renderPetrickCoverage(d.newUncoveredTerms, d.set)
 	
-    document.getElementById('process').innerHTML = d.process.map(p=>`<li>${p}</li>`).join('');
+    renderExpansion(d.process);
 
 	  document.getElementById('sop').textContent = d.sopTerms.join(', ');
 
