@@ -2,6 +2,14 @@ import getInput from './input.js';
 import runQM from './qmBridge.js';
 import render from "./render.js";
 
+//  fetch('./js/test2.json')
+//    .then(res => res.json())
+//    .then(data => {
+//      console.log(data);
+//      render(data);
+//      showView('output');
+//    });
+
 let QM = null;
 const runBtn = document.getElementById('run');
 const backBtn = document.getElementById('back');
@@ -17,8 +25,8 @@ initQM();
 runBtn.onclick = () => {
 
   if (!QM){ 
-	alert("QM not initialized yet");
-	throw new Error("QM not initialized yet");
+	  alert("QM not initialized yet");
+	  throw new Error("QM not initialized yet");
   }
   
   const input = getInput();
@@ -48,10 +56,3 @@ function showView(id){
   document.getElementById('input-view').classList.toggle('hidden', id !== 'input');
   document.getElementById('output-view').classList.toggle('hidden', id !== 'output');
 }
-
-// fetch('./js/test2.json')
-//   .then(res => res.json())
-//   .then(data => {
-//     console.log(data);
-//     render(data);
-//   });
