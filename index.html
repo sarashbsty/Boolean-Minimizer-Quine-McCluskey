@@ -66,7 +66,7 @@
 
   <section>
     <h2>Final Minimized Expression</h2>
-    <div id="result" class="mono result"></div>
+    <div id="result" class="mono text-box"></div>
   </section>
 
   <section>
@@ -92,10 +92,7 @@
         <tbody id="pi-body"></tbody>
       </table>
     </div>
-  </section>
-
-  <section>
-    <h2>Prime Implicant Chart</h2>
+    <h3>Prime Implicant Chart</h3>
     <div class="table-wrap">
       <table id="pi-chart"></table>
     </div>
@@ -103,7 +100,7 @@
 
   <section id = "essential-prime">
     <h2>Essential Prime-Implicants</h2>
-    <div id="essential" class="mono result"></div>
+    <div id="essential" class="mono text-box"></div>
   </section>
 
   <section>
@@ -115,39 +112,32 @@
     </div>
   </section>
 
-  <div id = "petrick">
-    <section>
-      <h2>Petrick Coverage (Uncovered Minterms)</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
-          </thead>
-          <tbody id="petrick-coverage-body"></tbody>
-        </table>
-      </div>
-    </section>
+  <section id = "petrick">
+    <h2>Petrick's Method</h2>
+    <h3>Uncovered VS Covering PI</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Uncovered Minterm</th><th>Covering Prime Implicants</th></tr>
+        </thead>
+        <tbody id="petrick-coverage-body"></tbody>
+      </table>
+    </div>
 
-    <section>
-      <h2>Petrick’s Method</h2>
-      <ul id="process" class="mono"></ul>
-    </section>
-      
-    <section>
-      <h2>Minimal SOP Terms</h2>
-      <div id="sop" class="mono"></div>
-    </section>
+    <h3>Petrick Expansion:</h3>
+    <div id="process"></div>
 
-    <section>
-      <h2>Petrick Combinations (Cost)</h2>
-      <div class="table-wrap">
-        <table id="petrick-table">
-          <thead></thead>
-          <tbody id="combos"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+    <h3>Minimal PI Sets:</h3>
+    <div id="sop" class="mono text-box"></div>
+
+    <h3>Possible Solutions:</h3>
+    <div class="table-wrap">
+      <table id="petrick-table">
+        <thead></thead>
+        <tbody id="combos"></tbody>
+      </table>
+    </div>
+  </section>
 </div>
 
 <!-- WASM -->
