@@ -27,7 +27,7 @@ export default function getInput(){
   const minterms = mintermsRaw === ''
     ? []
     : mintermsRaw
-        .split(',')
+        .split(/[,\s]+/)
         .map(v => Number(v.trim()))
         .filter(v => Number.isInteger(v));
 

@@ -13,6 +13,16 @@ import render from "./render.js";
 let QM = null;
 const runBtn = document.getElementById('run');
 const backBtn = document.getElementById('back');
+const form = document.getElementById('input-view');
+
+initQM();
+runBtn.onclick = () => runMinimizer();
+backBtn.onclick = () => showView('input');
+
+form.onsubmit = function (e) {
+  e.preventDefault();   // prevent page reload
+  runMinimizer();
+};
 
 async function initQM() {
     QM = await QMModule();   
@@ -20,10 +30,7 @@ async function initQM() {
     runBtn.textContent = 'Run Minimizer';
 }
 
-initQM();
-
-runBtn.onclick = () => {
-
+function runMinimizer(){
   if (!QM){ 
 	  alert("QM not initialized yet");
 	  throw new Error("QM not initialized yet");
@@ -48,9 +55,7 @@ runBtn.onclick = () => {
   
   showView('output');
   window.scrollTo(0,0);
-};
-
-backBtn.onclick = () => showView('input');
+}
 
 function showView(id){
   document.getElementById('input-view').classList.toggle('hidden', id !== 'input');
