@@ -14,20 +14,13 @@ export default function render(d){
   document.getElementById('result').textContent =
     'F = ' + d.result.join(' + ');
 
-  const groupFragment = document.createDocumentFragment();
-  renderTables(groupFragment, d.tables[0], 'Initial');
-  document.getElementById('grouping').replaceChildren(groupFragment);
+  const fragment = document.createDocumentFragment();
+  renderTables(fragment, d.tables[0], 'Initial Grouping');
 
-  if(d.tables.length > 1)
-  {
-    const reduceFragment = document.createDocumentFragment();
-    d.tables.slice(1).forEach((t,i)=>{ 
-      renderTables(reduceFragment, t, `Iteration ${i+1}`); 
-    });
-    document.getElementById('reductions').replaceChildren(reduceFragment);
-    document.getElementById('reduction-table').hidden = false;
-  }
-  else document.getElementById('reduction-table').hidden = true;
+  d.tables.slice(1).forEach((t,i)=>{ 
+    renderTables(fragment, t, `Reduction #${i+1}`); 
+  });
+  document.getElementById('Reduction').replaceChildren(fragment);
     
   renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms);  
 
@@ -41,10 +34,7 @@ export default function render(d){
   {
   	document.getElementById('petrick').hidden = false;
 	
-    if (!Array.isArray(d.newUncoveredTerms) || d.newUncoveredTerms.length === 0)
-		  d.newUncoveredTerms = d.uncoveredTerms.slice();
-	
-	  renderPetrickCoverage(d.newUncoveredTerms, d.set)
+	  renderPetrickCoverage(d.set);
 	
     renderExpansion(d.process);
 

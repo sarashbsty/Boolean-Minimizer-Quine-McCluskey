@@ -2,13 +2,7 @@ export default function renderTables(fragment, tableData, title) {
   // Title
   const h3 = document.createElement('h3');
   h3.textContent = title;
-  fragment.appendChild(h3);
-
-  // Wrapper
-  const wrap = document.createElement('div');
-  wrap.className = 'table-wrap';
-
-  const table = document.createElement('table');
+  fragment.append(h3);
 
   // THEAD
   const thead = document.createElement('thead');
@@ -20,7 +14,6 @@ export default function renderTables(fragment, tableData, title) {
       <th>Status</th>
     </tr>
   `;
-  table.appendChild(thead);
 
   // TBODY
   const tbody = document.createElement('tbody');
@@ -51,7 +44,13 @@ export default function renderTables(fragment, tableData, title) {
     });
   });
 
-  table.appendChild(tbody);
-  wrap.appendChild(table);
-  fragment.appendChild(wrap);
+  const table = document.createElement('table');
+  table.append(thead,tbody);
+
+   // Wrapper
+  const div = document.createElement('div');
+  div.className = 'table-wrap';
+  div.append(table);
+
+  fragment.append(div);
 }

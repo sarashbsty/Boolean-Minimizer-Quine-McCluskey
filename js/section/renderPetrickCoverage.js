@@ -1,17 +1,19 @@
-export default function renderPetrickCoverage(newUncoveredTerms, set)
+export default function renderPetrickCoverage(set)
 {
   const fragment = document.createDocumentFragment();
-  newUncoveredTerms.forEach((m,i) => {
+  set.forEach(s => {
     const tr = document.createElement('tr');
-    const tdNew = document.createElement('td');
-    tdNew.textContent = m;
 
-    const pis = [...set[i]].map(ch=>'P'+(ch.charCodeAt(0)-64)).join(', ');
+    const tdMinterm = document.createElement('td');
     const tdPi = document.createElement('td');
+
+    tdMinterm.textContent = s[0];
+
+    const pis = s.slice(1).join(', ');
     tdPi.textContent = pis;
     tdPi.classList.add('mono');
 
-    tr.append(tdNew, tdPi);
+    tr.append(tdMinterm, tdPi);
     fragment.append(tr);
   });
 

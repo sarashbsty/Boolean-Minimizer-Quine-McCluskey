@@ -1,5 +1,6 @@
 {
         "error":        false,
+        "errorMsg":     "No Errors",
         "variable":     5,
         "minterms":     [0, 1, 2, 5, 6, 7, 8, 9, 10, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 29, 30, 31],
         "dontCares":    [],
@@ -485,7 +486,7 @@
         "essentialPi":  ["C'D'", "CD"],
         "uncoveredTerms":       [2, 5, 10, 18, 21, 26, 29],
         "newUncoveredTerms":    [2, 5, 29],
-        "set":  ["EF", "AB", "CD"],
+        "set":  [[2, "P5", "P6"], [5, "P1", "P2"], [29, "P3", "P4"]],
         "process":      ["P = (P5 + P6)·(P1 + P2)·(P3 + P4)", "P = (P5P1 + P5P2 + P6P1 + P6P2)·(P3 + P4)", "P = (P5P1P3 + P5P1P4 + P5P2P3 + P5P2P4 + P6P1P3 + P6P1P4 + P6P2P3 + P6P2P4)"],
         "sopTerms":     ["P5P1P3", "P5P1P4", "P5P2P3", "P5P2P4", "P6P1P3", "P6P1P4", "P6P2P3", "P6P2P4"],
         "combinations": [["DE'", "B'D'E", "AD'E", 12], ["DE'", "B'D'E", "ACE", 11], ["DE'", "B'CE", "AD'E", 11], ["DE'", "B'CE", "ACE", 10], ["C'E'", "B'D'E", "AD'E", 13], ["C'E'", "B'D'E", "ACE", 12], ["C'E'", "B'CE", "AD'E", 12], ["C'E'", "B'CE", "ACE", 11]],

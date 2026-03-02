@@ -6,7 +6,8 @@ export default function renderUncovered(piChart, uncoveredTerms, newUncoveredTer
 
   renderPiChart('uncovered-chart', uncoveredTerms, dominated, piChart);
 
-  if(!newUncoveredTerms.length) document.getElementById('new-uncovered').hidden = true;
+  if(newUncoveredTerms.length == uncoveredTerms.length) 
+    document.getElementById('new-uncovered').hidden = true;
   else{
     renderPiChart('new-uncovered-chart', newUncoveredTerms, new Set(), piChart);
     document.getElementById('new-uncovered').hidden = false;

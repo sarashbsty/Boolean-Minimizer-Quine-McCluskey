@@ -12,8 +12,8 @@ h1{font-size:26px}
 h2{margin-top:28px;font-size:20px;border-bottom:1px solid var(--border)}
 h3{margin:10px 0;font-size:14px;color:var(--muted)}
 
-#petrick h3:not(:first-of-type) {
-  margin-top: 2rem;
+h3:not(:first-of-type) {
+  margin-top: 20px;
 }
 
 section{
