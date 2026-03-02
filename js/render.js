@@ -36,7 +36,7 @@ export default function render(d){
   
   renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
 
-  if(!d.uncoveredTerms.length) document.getElementById('petrick').hidden = true;
+  if(!d.newUncoveredTerms.length) document.getElementById('petrick').hidden = true;
   else
   {
   	document.getElementById('petrick').hidden = false;
@@ -53,3 +53,4 @@ export default function render(d){
 	  renderCombinations(d.combinations , d.minCostIdx);
   }
 }
+
