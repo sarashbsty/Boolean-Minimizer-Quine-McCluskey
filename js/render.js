@@ -43,4 +43,3 @@ export default function render(d){
 	  renderCombinations(d.combinations , d.minCostIdx);
   }
 }
-
