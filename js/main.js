@@ -24,7 +24,9 @@ form.onsubmit = function (e) {
 backBtn.onclick = () => showView('input');
 
 async function initQM() {
-    QM = await QMModule();   
+    QM = await QMModule();
+    
+    const runBtn = document.getElementById('run');
     runBtn.disabled = false;
     runBtn.textContent = 'Run Minimizer';
 }
