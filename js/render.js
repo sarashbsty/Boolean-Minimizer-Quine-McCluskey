@@ -1,5 +1,6 @@
 import renderTables from "./section/renderTables.js";
 import renderPrimeImplicants from "./section/renderPrimeImplicants.js";
+import renderEssentialPi from "./section/renderEssentialPrime.js";
 import renderUncovered from "./section/renderUncovered.js";
 import renderPetrickCoverage from "./section/renderPetrickCoverage.js";
 import renderExpansion from "./section/renderExpansion.js";
@@ -24,8 +25,7 @@ export default function render(d){
     
   renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms);  
 
-  if(!d.essentialPi.length) document.getElementById('essential').textContent = 'None';
-  else document.getElementById('essential').textContent = d.essentialPi.join(', ');
+  renderEssentialPi('essential-prime',d.essentialPi);
   
   renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
 
