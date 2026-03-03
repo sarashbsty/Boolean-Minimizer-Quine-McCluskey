@@ -11,18 +11,17 @@ import render from "./render.js";
 //    });
 
 let QM = null;
-const runBtn = document.getElementById('run');
+
 const backBtn = document.getElementById('back');
 const form = document.getElementById('input-form');
 
 initQM();
-runBtn.onclick = () => runMinimizer();
-backBtn.onclick = () => showView('input');
 
 form.onsubmit = function (e) {
   e.preventDefault();   // prevent page reload
   runMinimizer();
 };
+backBtn.onclick = () => showView('input');
 
 async function initQM() {
     QM = await QMModule();   
@@ -42,6 +41,7 @@ function runMinimizer(){
   const data = runQM(QM, input);
 
   if(data.error){
+    console.log("it working");
     const error = document.getElementById('error-popup');
     const errorBtn = document.getElementById('errorBtn');
 
