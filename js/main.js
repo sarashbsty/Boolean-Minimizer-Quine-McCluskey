@@ -13,7 +13,7 @@ import render from "./render.js";
 let QM = null;
 const runBtn = document.getElementById('run');
 const backBtn = document.getElementById('back');
-const form = document.getElementById('input-view');
+const form = document.getElementById('input-form');
 
 initQM();
 runBtn.onclick = () => runMinimizer();
