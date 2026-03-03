@@ -19,30 +19,32 @@
 </div>
 
 <!-- input view-->
-<form id="input-view">
+<div id="input-view">
   <h1>Boolean Function Minimizer</h1>
   <section>
     <h2>Input</h2>
-    <div class="grid">
-      <div>
-        <h3>Variables</h3>
-        <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
-        <div id="err-var" class="err"></div>
+    <form id="input-form">
+      <div class="grid">
+        <div>
+          <h3>Variables</h3>
+          <input id="var" type="number" min="1" placeholder="e.g. 4" class="mono">
+          <div id="err-var" class="err"></div>
+        </div>
+        <div>
+          <h3>Minterms</h3>
+          <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
+          <div id="err-minterms" class="err"></div>
+        </div>
+        <div>
+          <h3>Don’t Cares</h3>
+          <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
+          <div id="err-dc" class="err"></div>
+        </div>
       </div>
-      <div>
-        <h3>Minterms</h3>
-        <input id="minterms" type="text" placeholder="e.g. 1,2,3" class="mono">
-        <div id="err-minterms" class="err"></div>
-      </div>
-      <div>
-        <h3>Don’t Cares</h3>
-        <input id="dontcares" type="text" placeholder="e.g. 5,7" class="mono">
-        <div id="err-dc" class="err"></div>
-      </div>
-    </div>
-    <button id="run" type="submit" disabled style="margin-top:12px">Loading WASM…</button>
+      <button id="run" type="submit" disabled style="margin-top:12px">Loading WASM…</button>
+    </form>
   </section>
-</form>
+</div>
 
 <!-- OUTPUT VIEW -->
 <div id="output-view" class = "hidden">
