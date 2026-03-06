@@ -43,7 +43,6 @@ function runMinimizer(){
   const data = runQM(QM, input);
 
   if(data.error){
-    console.log("it working");
     const error = document.getElementById('error-popup');
     const errorBtn = document.getElementById('errorBtn');
 
