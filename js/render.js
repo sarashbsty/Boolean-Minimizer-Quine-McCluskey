@@ -17,15 +17,19 @@ export default function render(d){
   const tabulationSection = renderTabulation(d.tables);
   document.getElementById('tabulation').replaceChildren(tabulationSection);
     
-  renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms);  
+  const primeImplicantsSection = renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms); 
+  document.getElementById('prime-implicants').replaceChildren(primeImplicantsSection); 
 
   const essentialPiSection = renderEssentialPi(d.essentialPi);
   document.getElementById('essential-prime').replaceChildren(essentialPiSection);
-  
-  renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
+
+  const uncoveredSection = renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
+  document.getElementById('uncovered-minterms').replaceChildren(uncoveredSection);
 
   if(d.newUncoveredTerms.length){
     const petrickSection = renderPetrick(d);
     document.getElementById('petrick').replaceChildren(petrickSection);
-  } 
+  } else {
+    document.getElementById('petrick').innerHTML = ``;
+  }
 }
