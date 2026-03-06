@@ -30,6 +30,6 @@ export default function render(d){
     const petrickSection = renderPetrick(d);
     document.getElementById('petrick').replaceChildren(petrickSection);
   } else {
-    document.getElementById('petrick').innerHTML = ``;
+    document.getElementById('petrick').replaceChildren();
   }
 }
