@@ -2,14 +2,6 @@ import getInput from './input.js';
 import runQM from './qmBridge.js';
 import render from "./render.js";
 
-//  fetch('./js/test2.json')
-//    .then(res => res.json())
-//    .then(data => {
-//      console.log(data);
-//      render(data);
-//      showView('output');
-//    });
-
 let QM = null;
 
 const backBtn = document.getElementById('back');
