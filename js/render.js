@@ -1,45 +1,31 @@
-import renderTables from "./section/renderTables.js";
+import renderInputDetails from "./section/renderInputDetails.js";
+import renderResults from "./section/renderResults.js";
+import renderTabulation from "./section/renderTabulation.js";
 import renderPrimeImplicants from "./section/renderPrimeImplicants.js";
 import renderEssentialPi from "./section/renderEssentialPrime.js";
 import renderUncovered from "./section/renderUncovered.js";
-import renderPetrickCoverage from "./section/renderPetrickCoverage.js";
-import renderExpansion from "./section/renderExpansion.js";
-import renderCombinations from "./section/renderCombinations.js";
+import renderPetrick from "./section/renderPetrick.js";
 
 export default function render(d){
 
-  document.getElementById('varVal').textContent = d.variable;
-  document.getElementById('minVal').textContent = d.minterms.join(', ');
-  document.getElementById('dcVal').textContent = d.dontCares.length ? d.dontCares.join(', ') : 'None';
+  const inputOverviewSection = renderInputDetails(d.variable, d.minterms, d.dontCares);
+  document.getElementById('input-overview').replaceChildren(inputOverviewSection);
 
-  document.getElementById('result').textContent =
-    'F = ' + d.result.join(' + ');
+  const resultSection = renderResults(d.result);
+  document.getElementById('result').replaceChildren(resultSection);
 
-  const fragment = document.createDocumentFragment();
-  renderTables(fragment, d.tables[0], 'Initial Grouping');
-
-  d.tables.slice(1).forEach((t,i)=>{ 
-    renderTables(fragment, t, `Reduction #${i+1}`); 
-  });
-  document.getElementById('Reduction').replaceChildren(fragment);
+  const tabulationSection = renderTabulation(d.tables);
+  document.getElementById('tabulation').replaceChildren(tabulationSection);
     
   renderPrimeImplicants(d.primeImplicants, d.piChart, d.minterms);  
 
-  renderEssentialPi('essential-prime',d.essentialPi);
+  const essentialPiSection = renderEssentialPi(d.essentialPi);
+  document.getElementById('essential-prime').replaceChildren(essentialPiSection);
   
   renderUncovered(d.piChart, d.uncoveredTerms, d.newUncoveredTerms);
 
-  if(!d.newUncoveredTerms.length) document.getElementById('petrick').hidden = true;
-  else
-  {
-  	document.getElementById('petrick').hidden = false;
-	
-	  renderPetrickCoverage(d.set);
-	
-    renderExpansion(d.process);
-
-	  document.getElementById('sop').textContent = d.sopTerms.join(', ');
-
-	  renderCombinations(d.combinations , d.minCostIdx);
-  }
+  if(d.newUncoveredTerms.length){
+    const petrickSection = renderPetrick(d);
+    document.getElementById('petrick').replaceChildren(petrickSection);
+  } 
 }

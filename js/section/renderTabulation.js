@@ -1,4 +1,39 @@
-export default function renderTables(fragment, tableData, title) {
+export default function renderTabulation(tables)
+{
+  //heading
+  const h2 = document.createElement('h2');
+  h2.textContent = "Tabulation Process";
+
+  //tabulation
+  const tabulation = document.createElement('div');
+
+  const groupingFragment = document.createDocumentFragment();
+  renderTables(groupingFragment, tables[0], 'Initial Grouping');
+
+  const reductionFragment = document.createDocumentFragment();
+  tables.slice(1).forEach((t,i)=>{ renderTables(reductionFragment, t, `Reduction #${i+1}`); });
+
+  tabulation.append(groupingFragment, reductionFragment);
+  
+  //end
+  const end = document.createElement('div');
+  end.className = 'table-wrap';
+
+  const table = document.createElement('table');
+  const th = document.createElement('th');
+  th.textContent = "No Further Reductions Possible";
+  table.append(th);
+  
+  end.append(table);
+
+  //section creation
+  const section = document.createElement('section');
+  section.append(h2,tabulation,end);
+  
+  return section;
+}
+
+function renderTables(fragment, tableData, title) {
   // Title
   const h3 = document.createElement('h3');
   h3.textContent = title;

@@ -51,33 +51,11 @@
 
   <button id = 'back' style="margin-bottom:14px">← Back</button>
 
-  <section id="input">
-    <h2>Input Data</h2>
-    <div class="grid">
-      <div class="badge">
-        Variables: <span id="varVal"></span>
-      </div>
-      <div class="badge">
-        Minterms: <span id="minVal"></span>
-      </div>
-      <div class="badge">
-        Don’t Cares: <span id="dcVal"></span>
-      </div>
-    </div>
-  </section>
+  <div id="input-overview"></div>
 
-  <section>
-    <h2>Final Minimized Expression</h2>
-    <div id="result" class="mono text-box"></div>
-  </section>
+  <div id ="result"></div>
 
-  <section>
-    <h2>Grouping And Reductions</h2>
-    <div id="Reduction"></div>
-    <div class="table-wrap">
-      <table><th>No Further Reductions Possible</th></table>
-    </div>
-  </section>
+  <div id="tabulation"></div>
 
   <section>
     <h2>Prime Implicants</h2>
@@ -98,7 +76,7 @@
     </div>
   </section>
 
-  <section id = "essential-prime"></section>
+  <div id = "essential-prime"></div>
 
   <section>
     <h2>Uncovered Minterms</h2>
@@ -109,29 +87,8 @@
     </div>
   </section>
 
-  <section id = "petrick">
-    <h2>Petrick's Method</h2>
-    <h3>Uncovered VS Covering PI</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Uncovered Minterm</th><th>Covering PIs</th></tr>
-        </thead>
-        <tbody id="petrick-coverage-body"></tbody>
-      </table>
-    </div>
-
-    <h3>Petrick Expansion:</h3>
-    <div id="process"></div>
-
-    <h3>Minimal PI Sets:</h3>
-    <div id="sop" class="mono text-box"></div>
-
-    <h3>Possible Solutions:</h3>
-    <div class="table-wrap">
-      <table id="petrick-table"></table>
-    </div>
-  </section>
+  <div id ="petrick"></div>
+  
 </div>
 
 <!-- WASM -->

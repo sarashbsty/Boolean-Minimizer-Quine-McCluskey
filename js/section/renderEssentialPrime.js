@@ -1,4 +1,4 @@
-export default function renderEssentialPi(id, essentialPi)
+export default function renderEssentialPi(essentialPi)
 {
     const h2 = document.createElement('h2');
     h2.textContent = 'Essential Prime Implicants';
@@ -10,5 +10,8 @@ export default function renderEssentialPi(id, essentialPi)
     else 
         expression.textContent = 'None';
 
-    document.getElementById(id).replaceChildren(h2,expression);
+    const section = document.createElement('section');
+    section.append(h2,expression);
+    
+    return section;
 }
