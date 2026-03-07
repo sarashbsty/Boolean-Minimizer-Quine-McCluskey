@@ -111,16 +111,20 @@ function renderCombinations(combinations, minCostIdx)
     const thead = document.createElement('thead');
     const trHead = document.createElement('tr');
 
-    Array.from({ length: maxTerms }, (_, i) => {
+    const headings = [];
+
+    for (let i = 1; i <= maxTerms; i++)
+        headings.push(`Term ${i}`);
+
+    headings.push("Total Cost");
+
+    headings.forEach(heading => {
         const th = document.createElement('th');
-        th.textContent = `Term ${i+1}`;
+        th.textContent = heading;
         trHead.append(th);
     });
 
-    const thCost = document.createElement('th');
-    thCost.textContent = "Total Cost";
-    trHead.append(thCost);
-    thead.append(trHead);
+    thead.append(trHead);   
 
     const tbody = document.createElement('tbody');
     combinations.forEach((com , i) => {
@@ -132,10 +136,10 @@ function renderCombinations(combinations, minCostIdx)
         if(i === minCostIdx) tr.classList.add('highlight');
 
         terms.forEach(t => {
-        const td = document.createElement('td');
-        td.textContent = t;
-        td.classList.add('mono');
-        tr.append(td);
+            const td = document.createElement('td');
+            td.textContent = t;
+            td.classList.add('mono');
+            tr.append(td);
         });
 
         const td = document.createElement('td');
