@@ -44,11 +44,11 @@ th,td{
   padding:6px 8px;
   border-bottom:1px solid var(--border);
   white-space:nowrap;
-  font-size:13px;
+  font-size:15px;
   text-align:center
 }
-th{background:#020617;color:var(--muted)}
-tr:nth-child(even){background:#020617}
+th{background:rgba(0, 4, 255, 0.03);color:var(--muted)}
+tr:nth-child(even){background:rgba(0, 4, 255, 0.03);}
 
 input{
   width:100%;
