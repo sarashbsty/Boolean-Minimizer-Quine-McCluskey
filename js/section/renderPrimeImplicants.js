@@ -41,7 +41,7 @@ function renderPrimeImplicantsTable(primeImplicants)
 
   thead.append(trHead);
 
-  const tbody =  document.createDocumentFragment();
+  const tbody =  document.createElement('tbody');
 
   primeImplicants.forEach((imp,i) => {
     const tr = document.createElement('tr');
