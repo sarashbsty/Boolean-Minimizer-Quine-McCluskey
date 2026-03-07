@@ -72,12 +72,7 @@ button:disabled{
   cursor:not-allowed
 }
 
-.text-box{
-  font-size:18px;padding:10px;
-  border:1px solid var(--border);
-  border-radius:6px;background:#020617
-}
-.highlight{
+tr.highlight{
   background:rgba(99,102,241,0.15);
   border-left:3px solid var(--accent)
 }
