@@ -41,14 +41,15 @@ function renderTables(fragment, tableData, title) {
 
   // THEAD
   const thead = document.createElement('thead');
-  thead.innerHTML = `
-    <tr>
-      <th>Group</th>
-      <th>Binary</th>
-      <th>Minterms</th>
-      <th>Status</th>
-    </tr>
-  `;
+  const trHead = document.createElement('tr');
+
+  ['Group','Binary','Minterms','Status'].forEach(heading =>
+  {
+    const th = document.createElement('th');
+    th.textContent = heading;
+    trHead.append(th);
+  });
+  thead.append(trHead);
 
   // TBODY
   const tbody = document.createElement('tbody');
