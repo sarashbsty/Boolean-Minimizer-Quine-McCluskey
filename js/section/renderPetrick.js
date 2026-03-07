@@ -66,22 +66,27 @@ function renderExpansion(process)
 
     const h3 = document.createElement('h3');
     h3.textContent = "Petrick Expansion:";
-    processFragment.append(h3);
+    
+    const div = document.createElement('div');
+    div.className = "flex";
+    div.style.flexDirection = 'column';
+    div.style.alignContent = 'center';
 
     process.forEach((p,i) => {
-        
         if(i>0){
-            const arrows = document.createElement('div');
+            const arrows = document.createElement('span');
             arrows.textContent = '↓';
-            arrows.classList.add('arrow');
-            processFragment.append(arrows);
+            arrows.className = 'center';
+            div.append(arrows);
         }
 
-        const text = document.createElement('div');
+        const text = document.createElement('span');
         text.textContent = p;
-        text.classList.add("petrick-step");
-        processFragment.append(text);
+        text.classList.add("box");
+        div.append(text);
     });
+
+    processFragment.append(h3,div);
 
     return processFragment;
 }
@@ -92,8 +97,14 @@ function renderMinimal(terms)
     h3.textContent = "Minimal PI Sets";
 
     const div = document.createElement('div');
-    div.textContent = terms.join(', ');
-    div.className = "mono text-box"
+    div.className = "flex";
+	
+	terms.forEach(term =>{
+		const span = document.createElement('span');
+		span.textContent = term;
+		span.className = "mono box";
+		div.append(span);
+	});
 
     const minimalFragment = document.createDocumentFragment();
     minimalFragment.append(h3,div);

@@ -20,7 +20,7 @@ section{
   background:var(--panel);border:1px solid var(--border);
   border-radius:10px;padding:14px;margin-top:20px
 }
-.mono{font-family:ui-monospace,monospace}
+.mono{font-family: monospace}
 .badge{
   padding:4px 8px;border-radius:999px;
   background:#1e293b;font-size:11px
@@ -118,17 +118,20 @@ button:disabled{
   display: none;
 }
 
-.petrick-step {
-  padding: 0.75rem 1rem;
-  background: #1e293b79;
-  border: 1px solid #334155;
-  border-radius: 6px;
-  line-height: 1.6; 
+.flex {
+	display : flex;
+	flex-wrap: wrap;
+	gap : 8px;
 }
 
-.arrow {
-  text-align: center;
-  color: #64748b;
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
+.box {
+	text-align: center;
+	padding: 6px 12px;
+	border-radius: 6px;
+	background: #0f172a; 
+	border: 1px solid #334155; 
+}
+
+.center{
+	text-align: center;
 }
