@@ -20,6 +20,7 @@ export default function renderEssentialPi(essentialPi)
 		const span = document.createElement("span");
 		span.textContent = "No Essential Prime Implicants";
 		span.className = "box";
+		span.style.fontStyle = "italic";
 		expression.append(span)
 	}
 
