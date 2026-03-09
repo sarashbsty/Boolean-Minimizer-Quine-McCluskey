@@ -8,7 +8,7 @@ export default function renderResults(data)
   const result = document.createElement('div');
   result.className = "flex";
   result.style.alignItems = 'center';
-  result.style.fontSize = '20px';
+  result.style.fontSize = '16px';
   
   const arr = ['F = '];
   arr.push(data[0]);
