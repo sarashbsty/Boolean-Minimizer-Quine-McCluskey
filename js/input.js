@@ -24,17 +24,15 @@ export default function getInput(){
 
   const vars = Number(varsRaw);
 
-  const minterms = mintermsRaw === ''
-    ? []
-    : mintermsRaw
-        .split(/[,\s]+/)
-        .map(v => Number(v.trim()))
-        .filter(v => Number.isInteger(v));
+  const minterms = mintermsRaw
+                    .split(/[,\s]+/)
+                    .map(v => Number(v.trim()))
+                    .filter(v => Number.isInteger(v));
 
   const dontCares = dontCaresRaw === ''
     ? []
     : dontCaresRaw
-        .split(',')
+        .split(/[,\s]+/)
         .map(v => Number(v.trim()))
         .filter(v => Number.isInteger(v));
 
