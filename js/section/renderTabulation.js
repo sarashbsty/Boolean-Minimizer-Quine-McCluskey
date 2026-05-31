@@ -33,7 +33,10 @@ export default function renderTabulation(tables)
   return section;
 }
 
-function renderTables(fragment, tableData, title) {
+function renderTables(fragment, tableData, title)
+ {
+  if(!tableData) return;
+  
   // Title
   const h3 = document.createElement('h3');
   h3.textContent = title;
