@@ -70,7 +70,7 @@ function renderExpansion(process)
     const div = document.createElement('div');
     div.className = "flex";
     div.style.flexDirection = 'column';
-    div.style.alignContent = 'center';
+    div.style.alignContent = 'flex-start';
 
     process.forEach((p,i) => {
         if(i>0){
